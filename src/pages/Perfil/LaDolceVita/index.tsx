@@ -3,6 +3,7 @@ import Header from '../../../components/Header'
 import Presentation from '../../../components/Presentation'
 import ProductsList from '../../../components/ProductsList'
 import ProductModel from '../../../models/ProductModel'
+import ladolcevita from '../../../assets/images/ladolcevita-big.png'
 import marguerita from '../../../assets/images/pizza-marguerita.png'
 
 const products: ProductModel[] = [
@@ -53,7 +54,11 @@ const products: ProductModel[] = [
 const LaDolceVita = () => (
   <>
     <Header />
-    <Presentation />
+    <Presentation
+      type={'Italiana'}
+      title={'La Dolce Vita Trattoria'}
+      image={ladolcevita}
+    />
     <ProductsList products={products} />
     <Footer />
   </>

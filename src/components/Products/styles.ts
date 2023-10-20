@@ -8,6 +8,8 @@ export const ProductsCard = styled.div`
 
   img {
     display: block;
+    width: 304px;
+    height: 167px;
   }
 `
 

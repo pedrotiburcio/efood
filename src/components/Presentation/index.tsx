@@ -1,11 +1,17 @@
 import { PresentationContainer, Title } from './styles'
 
-const Presentation = () => (
-  <PresentationContainer>
+type Props = {
+  type: string
+  title: string
+  image: string
+}
+
+const Presentation = ({ type, title, image }: Props) => (
+  <PresentationContainer style={{ backgroundImage: `url(${image})` }}>
     <div className="background">
       <div className="container">
-        <span>Italiana</span>
-        <Title>La Dolce Vita Trattoria</Title>
+        <span>{type}</span>
+        <Title>{title}</Title>
       </div>
     </div>
   </PresentationContainer>
