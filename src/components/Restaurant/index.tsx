@@ -1,16 +1,7 @@
 import star from '../../assets/images/star.svg'
 import Tag from '../Tag'
 
-import {
-  RestaurantCard,
-  Title,
-  Infos,
-  Description,
-  Image,
-  ButtonLink,
-  InfosTag,
-  Grade
-} from './styles'
+import * as S from './styles'
 
 export type Props = {
   image: string
@@ -22,28 +13,28 @@ export type Props = {
 }
 
 const Restaurant = ({ image, title, grade, tags, to, description }: Props) => (
-  <RestaurantCard>
-    <Image style={{ backgroundImage: `url(${image})` }}>
-      <InfosTag>
+  <S.RestaurantCard>
+    <S.Image style={{ backgroundImage: `url(${image})` }}>
+      <S.InfosTag>
         {tags.map((tag) => (
           <Tag key={tag}>{tag}</Tag>
         ))}
-      </InfosTag>
-    </Image>
-    <Infos>
+      </S.InfosTag>
+    </S.Image>
+    <S.Infos>
       <div>
-        <Title>{title}</Title>
+        <S.Title>{title}</S.Title>
         <div>
-          <Grade>{grade}</Grade>
+          <S.Grade>{grade}</S.Grade>
           <img src={star} alt="Estrela" />
         </div>
       </div>
-      <Description>{description}</Description>
+      <S.Description>{description}</S.Description>
       <div>
-        <ButtonLink to={to}>Saiba mais</ButtonLink>
+        <S.ButtonLink to={to}>Saiba mais</S.ButtonLink>
       </div>
-    </Infos>
-  </RestaurantCard>
+    </S.Infos>
+  </S.RestaurantCard>
 )
 
 export default Restaurant

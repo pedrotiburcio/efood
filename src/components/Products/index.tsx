@@ -1,4 +1,4 @@
-import { Button, Description, ProductsCard, Title } from './styles'
+import * as S from './styles'
 
 type Props = {
   image: string
@@ -7,12 +7,12 @@ type Props = {
 }
 
 const Product = ({ image, title, description }: Props) => (
-  <ProductsCard>
+  <S.ProductsCard>
     <img src={image} alt={title} />
-    <Title>{title}</Title>
-    <Description>{description}</Description>
-    <Button>Adicionar ao carrinho</Button>
-  </ProductsCard>
+    <S.Title>{title}</S.Title>
+    <S.Description>{description}</S.Description>
+    <S.Button>Adicionar ao carrinho</S.Button>
+  </S.ProductsCard>
 )
 
 export default Product
