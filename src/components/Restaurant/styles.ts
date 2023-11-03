@@ -10,6 +10,7 @@ export const Image = styled.div`
   height: 217px;
   justify-content: end;
   position: relative;
+  background-size: cover;
 
   ${TagContainer} {
     margin-left: 8px;
@@ -32,6 +33,7 @@ export const Infos = styled.div`
   border-right: 1px solid ${colors.darkPink};
   border-bottom: 1px solid ${colors.darkPink};
   border-left: 1px solid ${colors.darkPink};
+  height: 208px;
 
   div {
     display: flex;
@@ -49,6 +51,7 @@ export const Description = styled.p`
   font-size: 14px;
   line-height: 22px;
   color: ${colors.darkPink};
+  text-align: justify;
 `
 
 export const ButtonLink = styled(Link)`
@@ -64,5 +67,11 @@ export const InfosTag = styled.div`
   position: absolute;
   top: 16px;
   right: 16px;
+
+  &.message {
+    ::first-letter {
+      text-transform: uppercase;
+    }
+  }
 }
 `

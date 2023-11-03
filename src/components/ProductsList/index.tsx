@@ -1,9 +1,9 @@
-import ProductModel from '../../models/ProductModel'
-import Product from '../Products'
+import Product, { ProductType } from '../Product'
+
 import { ProductsSection, List } from './styles'
 
 export type Props = {
-  products: ProductModel[]
+  products: ProductType[]
 }
 
 const ProductsList = ({ products }: Props) => (
@@ -13,9 +13,12 @@ const ProductsList = ({ products }: Props) => (
         {products.map((product) => (
           <Product
             key={product.id}
-            image={product.image}
-            title={product.title}
-            description={product.description}
+            id={product.id}
+            foto={product.foto}
+            nome={product.nome}
+            descricao={product.descricao}
+            preco={product.preco}
+            porcao={product.porcao}
           />
         ))}
       </List>

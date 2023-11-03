@@ -1,37 +1,44 @@
-import star from '../../assets/images/star.svg'
 import Tag from '../Tag'
-
+import { RestaurantType } from '../../pages/Home'
+import star from '../../assets/images/star.svg'
 import * as S from './styles'
 
-export type Props = {
-  image: string
-  title: string
-  grade: number
-  description: string
-  tags: string[]
-  to: string
-}
-
-const Restaurant = ({ image, title, grade, tags, to, description }: Props) => (
+const Restaurant = ({
+  id,
+  titulo,
+  destacado,
+  tipo,
+  avaliacao,
+  descricao,
+  capa,
+  cardapio
+}: RestaurantType) => (
   <S.RestaurantCard>
-    <S.Image style={{ backgroundImage: `url(${image})` }}>
-      <S.InfosTag>
-        {tags.map((tag) => (
-          <Tag key={tag}>{tag}</Tag>
-        ))}
+    <S.Image style={{ backgroundImage: `url(${capa})` }}>
+      <S.InfosTag className={'message'}>
+        <>
+          {destacado ? (
+            <>
+              <Tag size="small">Destaque da semana</Tag>
+              <Tag size="small">{tipo}</Tag>
+            </>
+          ) : (
+            <Tag size="big">{tipo}</Tag>
+          )}
+        </>
       </S.InfosTag>
     </S.Image>
     <S.Infos>
       <div>
-        <S.Title>{title}</S.Title>
+        <S.Title>{titulo}</S.Title>
         <div>
-          <S.Grade>{grade}</S.Grade>
+          <S.Grade>{avaliacao}</S.Grade>
           <img src={star} alt="Estrela" />
         </div>
       </div>
-      <S.Description>{description}</S.Description>
+      <S.Description>{descricao}</S.Description>
       <div>
-        <S.ButtonLink to={to}>Saiba mais</S.ButtonLink>
+        <S.ButtonLink to={`restaurant/${id}`}>Saiba mais</S.ButtonLink>
       </div>
     </S.Infos>
   </S.RestaurantCard>

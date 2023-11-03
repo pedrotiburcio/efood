@@ -1,10 +1,12 @@
 import { TagContainer } from './styles'
 
 export type TagProps = {
-  children: string
-  // space?: 'small' | 'big'
+  children: string | boolean
+  size: 'small' | 'big'
 }
 
-const Tag = ({ children }: TagProps) => <TagContainer>{children}</TagContainer>
+const Tag = ({ children, size }: TagProps) => (
+  <TagContainer size={size}>{children}</TagContainer>
+)
 
 export default Tag
