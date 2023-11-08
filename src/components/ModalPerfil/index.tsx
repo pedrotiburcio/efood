@@ -1,17 +1,19 @@
 import { useState } from 'react'
-import { Button } from '../Product/styles'
-import { Content, Modal, ModalContent } from './styles'
+import * as S from './styles'
 
 import close from '../../assets/images/close.png'
+import { priceFormat } from '../Product'
+import { Button } from '../Product/styles'
 
 type Props = {
-  image: string
-  title: string
-  description: string
-  price: string
+  foto: string
+  preco: number
+  nome: string
+  descricao: string
+  porcao: string
 }
 
-const ModalPerfil = ({ image, title, description, price }: Props) => {
+const ModalPerfil = ({ foto, preco, nome, descricao, porcao }: Props) => {
   const [modalIsOpen, setModalIsOpen] = useState(true)
 
   const closeModal = () => {
@@ -19,22 +21,23 @@ const ModalPerfil = ({ image, title, description, price }: Props) => {
   }
 
   return (
-    <Modal className={modalIsOpen ? 'visible' : ''}>
-      <ModalContent className="container">
+    <S.Modal className={modalIsOpen ? 'visible' : ''}>
+      <S.ModalContent className="container">
         <header>
           <img src={close} alt="Ícone de fechar" onClick={() => closeModal()} />
         </header>
-        <Content>
-          <img src={image} alt="Pizza marguerita" />
+        <S.Content>
+          <img src={foto} alt="Pizza marguerita" />
           <div>
-            <h4>{title}</h4>
-            <p>{description}</p>
-            <Button>Adicionar ao carrinho - R$ {price}</Button>
+            <h4>{nome}</h4>
+            <p>{descricao}</p>
+            <p>{`Serve: ${porcao}`} </p>
+            <Button>{`Adicionar ao carrinho - ${priceFormat(preco)}`}</Button>
           </div>
-        </Content>
-      </ModalContent>
+        </S.Content>
+      </S.ModalContent>
       <div className="overlay" onClick={() => closeModal()}></div>
-    </Modal>
+    </S.Modal>
   )
 }
 export default ModalPerfil
