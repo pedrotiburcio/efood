@@ -27,12 +27,14 @@ export const HeaderContainer = styled.div`
       width: 256px;
     }
 
-    p {
+    button {
       width: 256px;
       text-align: right;
       font-size: 18px;
       font-weight: 900;
       color: ${colors.darkPink};
+      background-color: transparent;
+      border: none;
     }
   }
 `

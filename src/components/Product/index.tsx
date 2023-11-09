@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 import close from '../../assets/images/close.png'
 import * as S from './styles'
+import { add, open } from '../../store/reducers/cart'
+import { useDispatch } from 'react-redux'
 
 export type ProductType = {
   foto: string
@@ -33,6 +35,21 @@ const Product = ({ foto, preco, id, nome, descricao, porcao }: ProductType) => {
     return description
   }
 
+  //adicionando produto e mostrando carrinho
+  const dispatch = useDispatch()
+  const selectedProduct = {
+    foto,
+    preco,
+    id,
+    nome,
+    descricao,
+    porcao
+  }
+  const addToCart = () => {
+    dispatch(add(selectedProduct))
+    dispatch(open())
+  }
+
   return (
     <>
       <S.ProductsCard>
@@ -56,9 +73,9 @@ const Product = ({ foto, preco, id, nome, descricao, porcao }: ProductType) => {
               <h4>{nome}</h4>
               <p>{descricao}</p>
               <p>{`Serve: ${porcao}`} </p>
-              <S.ButtonModal>{`Adicionar ao carrinho - ${priceFormat(
-                preco
-              )}`}</S.ButtonModal>
+              <S.ButtonModal
+                onClick={addToCart}
+              >{`Adicionar ao carrinho - ${priceFormat(preco)}`}</S.ButtonModal>
             </div>
           </S.Content>
         </S.ModalContent>
