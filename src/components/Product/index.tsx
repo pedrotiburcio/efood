@@ -1,9 +1,6 @@
-import { useState } from 'react'
-
-import close from '../../assets/images/close.png'
 import * as S from './styles'
-import { add, open } from '../../store/reducers/cart'
 import { useDispatch } from 'react-redux'
+import { open, add } from '../../store/reducers/modal'
 
 export type ProductType = {
   foto: string
@@ -21,31 +18,26 @@ export const priceFormat = (preco = 0) => {
   }).format(preco)
 }
 
+const getDescription = (description: string) => {
+  if (description.length > 175) {
+    return description.slice(0, 160) + '...'
+  }
+  return description
+}
+
 const Product = ({ foto, preco, id, nome, descricao, porcao }: ProductType) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
-
-  const closeModal = () => {
-    setModalIsOpen(false)
-  }
-
-  const getDescription = (description: string) => {
-    if (description.length > 175) {
-      return description.slice(0, 160) + '...'
-    }
-    return description
-  }
-
-  //adicionando produto e mostrando carrinho
-  const dispatch = useDispatch()
   const selectedProduct = {
     foto,
     preco,
-    id,
     nome,
+    id,
     descricao,
     porcao
   }
-  const addToCart = () => {
+
+  const dispatch = useDispatch()
+
+  const openModal = () => {
     dispatch(add(selectedProduct))
     dispatch(open())
   }
@@ -56,31 +48,8 @@ const Product = ({ foto, preco, id, nome, descricao, porcao }: ProductType) => {
         <img src={foto} alt={nome} />
         <S.Title>{nome}</S.Title>
         <S.Description>{getDescription(descricao)}</S.Description>
-        <S.Button onClick={() => setModalIsOpen(true)}>Mais detalhes</S.Button>
+        <S.Button onClick={openModal}>Mais detalhes</S.Button>
       </S.ProductsCard>
-      <S.Modal className={modalIsOpen ? 'visible' : ''}>
-        <S.ModalContent className="container">
-          <header>
-            <img
-              src={close}
-              alt="Ícone de fechar"
-              onClick={() => closeModal()}
-            />
-          </header>
-          <S.Content>
-            <img src={foto} alt="Pizza marguerita" />
-            <div>
-              <h4>{nome}</h4>
-              <p>{descricao}</p>
-              <p>{`Serve: ${porcao}`} </p>
-              <S.ButtonModal
-                onClick={addToCart}
-              >{`Adicionar ao carrinho - ${priceFormat(preco)}`}</S.ButtonModal>
-            </div>
-          </S.Content>
-        </S.ModalContent>
-        <div className="overlay" onClick={() => closeModal()}></div>
-      </S.Modal>
     </>
   )
 }

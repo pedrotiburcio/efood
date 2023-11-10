@@ -5,6 +5,7 @@ import { GlobalCSS } from './styles'
 import Rotas from './routes'
 import { store } from './store'
 import Cart from './components/Cart'
+import Modal from './components/Modal'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         </div>
         <Rotas />
         <Cart />
+        <Modal />
       </BrowserRouter>
     </Provider>
   )
