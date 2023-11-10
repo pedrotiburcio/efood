@@ -33,7 +33,8 @@ export const Aside = styled.aside`
   height: 100%;
   background-color: ${colors.darkPink};
   z-index: 1;
-  padding: 32px 8px 0 8px;
+  padding: 32px 8px 64px 8px;
+  overflow-y: scroll;
 `
 
 export const CartItem = styled.li`

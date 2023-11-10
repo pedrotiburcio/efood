@@ -1,13 +1,12 @@
-import * as S from './styles'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { priceFormat } from '../Product'
 import { Button } from '../Product/styles'
-import { useDispatch, useSelector } from 'react-redux'
-
-import closeImg from '../../assets/images/close.png'
 import { add, open } from '../../store/reducers/cart'
 import { close } from '../../store/reducers/modal'
 import { RootReducer } from '../../store'
+import closeImg from '../../assets/images/close.png'
+import * as S from './styles'
 
 const Modal = () => {
   const { isOpen, item } = useSelector((state: RootReducer) => state.modal)
