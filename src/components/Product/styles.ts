@@ -1,7 +1,15 @@
 import styled from 'styled-components'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 
 import { Button as ButtonM } from '../Product/styles'
+
+export const Description = styled.p`
+  margin: 8px 0;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+`
 
 export const ProductsCard = styled.div`
   padding: 8px;
@@ -13,6 +21,15 @@ export const ProductsCard = styled.div`
     display: block;
     width: 304px;
     height: 167px;
+    margin: auto;
+  }
+
+  @media (max-width: ${breakpoints.desktop}) {
+    text-align: center;
+
+    ${Description} {
+      text-align: justify;
+    }
   }
 `
 
@@ -20,14 +37,6 @@ export const Title = styled.h3`
   margin-top: 8px;
   font-size: 16px;
   font-weight: 900;
-`
-
-export const Description = styled.p`
-  margin: 8px 0;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 22px;
 `
 
 export const Button = styled.button`

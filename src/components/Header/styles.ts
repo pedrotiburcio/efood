@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import header from '../../assets/images/header.svg'
 import { ButtonLink } from '../Restaurant/styles'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 
 export const RestaurantLink = styled(ButtonLink)`
   padding: 0;
@@ -9,6 +9,10 @@ export const RestaurantLink = styled(ButtonLink)`
   font-weight: 900;
   background-color: transparent;
   color: ${colors.darkPink};
+  width: 256px;
+  bottom: 0;
+  left: 0;
+  position: relative;
 `
 
 export const HeaderContainer = styled.div`
@@ -23,10 +27,6 @@ export const HeaderContainer = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    ${RestaurantLink} {
-      width: 256px;
-    }
-
     button {
       width: 256px;
       text-align: right;
@@ -35,6 +35,24 @@ export const HeaderContainer = styled.div`
       color: ${colors.darkPink};
       background-color: transparent;
       border: none;
+    }
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    padding: 24px 0;
+    text-align: center;
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        margin: 16px 0;
+      }
+
+      button {
+        text-align: center;
+      }
     }
   }
 `

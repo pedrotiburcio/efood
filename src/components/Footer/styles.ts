@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 
 export const Logos = styled.div`
   display: flex;
@@ -27,5 +27,9 @@ export const FooterContainer = styled.div`
     color: ${colors.darkPink};
     width: 480px;
     text-align: center;
+
+    @media (max-width: ${breakpoints.tablet}) {
+      width: 100%;
+    }
   }
 `

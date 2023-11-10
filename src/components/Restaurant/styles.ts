@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 import { TagContainer } from '../Tag/styles'
 
 export const RestaurantCard = styled.div``
@@ -34,6 +34,11 @@ export const Infos = styled.div`
   border-bottom: 1px solid ${colors.darkPink};
   border-left: 1px solid ${colors.darkPink};
   height: 208px;
+  position: relative;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    height: 248px;
+  }
 
   div {
     display: flex;
@@ -61,6 +66,9 @@ export const ButtonLink = styled(Link)`
   font-weight: bold;
   background-color: ${colors.darkPink};
   color: ${colors.pink};
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
 `
 
 export const InfosTag = styled.div`
