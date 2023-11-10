@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../../styles'
+import { breakpoints, colors } from '../../styles'
 import { Button } from '../Product/styles'
 
 export const Modal = styled.div`
@@ -75,5 +75,30 @@ export const Content = styled.div`
     padding: 4px 8px;
     width: auto;
     text-align: justify;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      margin: 0;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: justify;
+
+      h4 {
+        margin-top: 16px;
+      }
+
+      ${Button} {
+        margin-top: 8px;
+      }
+    }
   }
 `
