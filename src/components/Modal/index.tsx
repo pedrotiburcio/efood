@@ -34,7 +34,7 @@ const Modal = () => {
           />
         </header>
         <S.Content>
-          <img src={item.foto} alt="Pizza marguerita" />
+          <img src={item.foto} alt={item.nome} />
           <div>
             <h4>{item.nome}</h4>
             <p>{item.descricao}</p>

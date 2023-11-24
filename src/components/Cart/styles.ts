@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { colors } from '../../styles'
 import garbage from '../../assets/images/garbage-icon.png'
 
-export const CartContainer = styled.div`
+export const Container = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -20,7 +20,7 @@ export const CartContainer = styled.div`
 export const Overlay = styled.div`
   position: absolute;
   top: 0;
-  left: o;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: #000;
@@ -28,8 +28,7 @@ export const Overlay = styled.div`
 `
 
 export const Aside = styled.aside`
-  max-width: 360px;
-  width: 100%;
+  width: 360px;
   height: 100%;
   background-color: ${colors.darkPink};
   z-index: 1;

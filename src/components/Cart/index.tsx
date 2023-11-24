@@ -1,9 +1,9 @@
-import { CartContainer, Overlay, Aside, CartItem, PriceContent } from './styles'
-import { Button } from '../Product/styles'
-
 import { useDispatch, useSelector } from 'react-redux'
+import { Container, Overlay, Aside, CartItem, PriceContent } from './styles'
+import { Button } from '../Product/styles'
 import { RootReducer } from '../../store'
 import { close, remove } from '../../store/reducers/cart'
+import { openDelivery } from '../../store/reducers/checkout'
 import { priceFormat } from '../Product'
 
 const Cart = () => {
@@ -25,11 +25,23 @@ const Cart = () => {
     }, 0)
   }
 
+  const open = () => {
+    closeCart()
+    dispatch(openDelivery())
+  }
+
+  const redirect = () => {
+    if (items.length === 0) {
+      return closeCart()
+    }
+    return open()
+  }
+
   return (
-    <>
-      <CartContainer className={isOpen ? 'is-open' : ''}>
-        <Overlay onClick={closeCart} />
-        <Aside>
+    <Container className={isOpen ? 'is-open' : ''}>
+      <Overlay onClick={closeCart} />
+      <Aside>
+        <>
           <ul>
             {items.map((item) => (
               <CartItem key={item.id}>
@@ -46,10 +58,24 @@ const Cart = () => {
             <p>Valor total</p>
             <span>{priceFormat(getTotalPrice())}</span>
           </PriceContent>
-          <Button>Continuar com a entrega</Button>
-        </Aside>
-      </CartContainer>
-    </>
+          <Button onClick={() => redirect()}>Continuar com a entrega</Button>
+          {/* {items.length > 0 ? (
+            <>
+              <PriceContent>
+                <p>Valor total</p>
+                <span>{priceFormat(getTotalPrice())}</span>
+              </PriceContent>
+              <Button onClick={open}>Continuar com a entrega</Button>
+            </>
+          ) : (
+            <>
+              <Title>Ainda não há produto no carrinho.</Title>
+              <Button onClick={closeCart}>Retornar</Button>
+            </>
+          )} */}
+        </>
+      </Aside>
+    </Container>
   )
 }
 
