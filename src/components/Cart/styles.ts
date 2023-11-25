@@ -1,6 +1,8 @@
-import styled from 'styled-components'
-import { colors } from '../../styles'
 import garbage from '../../assets/images/garbage-icon.png'
+
+import styled from 'styled-components'
+
+import { colors } from '../../styles'
 
 export const Container = styled.div`
   position: fixed;

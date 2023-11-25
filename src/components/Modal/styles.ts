@@ -1,6 +1,7 @@
 import styled from 'styled-components'
+
+import { StandardButton } from '../Button/styles'
 import { breakpoints, colors } from '../../styles'
-import { Button } from '../Product/styles'
 
 export const Modal = styled.div`
   position: fixed;
@@ -71,7 +72,7 @@ export const Content = styled.div`
     margin: 16px 0;
   }
 
-  ${Button} {
+  ${StandardButton} {
     padding: 4px 8px;
     width: auto;
     text-align: justify;
@@ -96,7 +97,7 @@ export const Content = styled.div`
         margin-top: 16px;
       }
 
-      ${Button} {
+      ${StandardButton} {
         margin-top: 8px;
       }
     }

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 import { breakpoints, colors } from '../../styles'
 
 export const Logos = styled.div`

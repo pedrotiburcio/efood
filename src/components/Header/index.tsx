@@ -1,9 +1,11 @@
-import logo from '../../assets/images/logo.svg'
-import { HeaderContainer, RestaurantLink } from './styles'
+import { RootReducer } from '../../store'
 
 import { open } from '../../store/reducers/cart'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootReducer } from '../../store'
+
+import logo from '../../assets/images/logo.svg'
+
+import * as S from './styles'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -14,15 +16,21 @@ const Header = () => {
   }
 
   return (
-    <HeaderContainer>
+    <S.HeaderContainer>
       <div className="container">
-        <RestaurantLink to={'/'}>Restaurantes</RestaurantLink>
+        <S.RestaurantLink
+          title="Clique aqui para ir para a página de restaurantes"
+          type="link"
+          to={'/'}
+        >
+          Restaurantes
+        </S.RestaurantLink>
         <img src={logo} alt="Logo efood" />
         <button onClick={openCart}>
           {items.length} produto(s) no carrinho
         </button>
       </div>
-    </HeaderContainer>
+    </S.HeaderContainer>
   )
 }
 

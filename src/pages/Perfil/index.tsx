@@ -7,10 +7,14 @@ import ProductsList from '../../components/ProductsList'
 
 import { useGetSelectedRestaurantQuery } from '../../services/api'
 
-const Perfil = () => {
-  const { id } = useParams()
+type RestaurantParams = {
+  id: string
+}
 
-  const { data: restaurant } = useGetSelectedRestaurantQuery(id!)
+const Perfil = () => {
+  const { id } = useParams() as RestaurantParams
+
+  const { data: restaurant } = useGetSelectedRestaurantQuery(id)
 
   if (restaurant) {
     return (

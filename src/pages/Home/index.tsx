@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
-
 import Footer from '../../components/Footer'
-import RestaurantsList from '../../components/RestaurantsList'
 import Hero from '../../components/Hero'
-import { ProductType } from '../../components/Product'
+import RestaurantsList from '../../components/RestaurantsList'
+
 import { useGetRestaurantsQuery } from '../../services/api'
+
+import { ProductType } from '../../components/Product'
 
 export type RestaurantType = {
   id: number

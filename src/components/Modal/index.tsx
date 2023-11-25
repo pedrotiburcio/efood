@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 
-import { priceFormat } from '../Product'
-import { Button } from '../Product/styles'
+import { priceFormat } from '../../utils'
+import Button from '../Button'
 import { add, open } from '../../store/reducers/cart'
 import { close } from '../../store/reducers/modal'
 import { RootReducer } from '../../store'
@@ -39,9 +39,11 @@ const Modal = () => {
             <h4>{item.nome}</h4>
             <p>{item.descricao}</p>
             <p>{`Serve: ${item.porcao}`} </p>
-            <Button onClick={addToCart}>{`Adicionar ao carrinho - ${priceFormat(
-              item.preco
-            )}`}</Button>
+            <Button
+              title="Clique aqui para adicionar este produto ao carrinho"
+              type="button"
+              onClick={addToCart}
+            >{`Adicionar ao carrinho - ${priceFormat(item.preco)}`}</Button>
           </div>
         </S.Content>
       </S.ModalContent>

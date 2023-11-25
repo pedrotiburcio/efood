@@ -1,5 +1,7 @@
-import styled from 'styled-components'
 import ladolcevita from '../../assets/images/ladolcevita-big.png'
+
+import styled from 'styled-components'
+
 import { colors } from '../../styles'
 
 export const PresentationContainer = styled.div`

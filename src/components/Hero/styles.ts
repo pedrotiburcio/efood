@@ -1,7 +1,8 @@
+import hero from '../../assets/images/hero.svg'
+
 import styled from 'styled-components'
 
 import { colors } from '../../styles'
-import hero from '../../assets/images/hero.svg'
 
 export const HeroContainer = styled.div`
   background-image: url(${hero});

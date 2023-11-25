@@ -1,9 +1,11 @@
-import styled from 'styled-components'
 import header from '../../assets/images/header.svg'
-import { ButtonLink } from '../Restaurant/styles'
+
+import styled from 'styled-components'
+
+import { LinkButton } from '../Button/styles'
 import { breakpoints, colors } from '../../styles'
 
-export const RestaurantLink = styled(ButtonLink)`
+export const RestaurantLink = styled(LinkButton)`
   padding: 0;
   font-size: 18px;
   font-weight: 900;

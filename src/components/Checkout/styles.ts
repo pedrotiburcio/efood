@@ -1,7 +1,8 @@
 import styled from 'styled-components'
-import { colors } from '../../styles'
-import { Button } from '../Product/styles'
+
 import { Aside } from '../Cart/styles'
+import { StandardButton } from '../Button/styles'
+import { colors } from '../../styles'
 
 type ButtonProps = {
   marginTop?: string
@@ -48,10 +49,15 @@ export const InputGroup = styled.div<InputGroupProps>`
     height: 32px;
     border: 1px solid ${colors.pink};
     width: 100%;
+
+    &.error {
+      background-color: #ffe564;
+      border: 1px solid #000;
+    }
   }
 `
 
-export const ButtonCheckout = styled(Button)<ButtonProps>`
+export const ButtonCheckout = styled(StandardButton)<ButtonProps>`
   margin-bottom: 8px;
   margin-top: ${(props) => props.marginTop || '0'};
 `

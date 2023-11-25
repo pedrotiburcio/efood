@@ -1,6 +1,10 @@
+import Button from '../Button'
 import Tag from '../Tag'
+
 import { RestaurantType } from '../../pages/Home'
+
 import star from '../../assets/images/star.svg'
+
 import * as S from './styles'
 
 const Restaurant = ({
@@ -10,8 +14,7 @@ const Restaurant = ({
   tipo,
   avaliacao,
   descricao,
-  capa,
-  cardapio
+  capa
 }: RestaurantType) => (
   <S.RestaurantCard>
     <S.Image style={{ backgroundImage: `url(${capa})` }}>
@@ -38,7 +41,13 @@ const Restaurant = ({
       </div>
       <S.Description>{descricao}</S.Description>
       <div>
-        <S.ButtonLink to={`restaurant/${id}`}>Saiba mais</S.ButtonLink>
+        <Button
+          title="Clique aqui para ver os pratos servidos pelo restaurante"
+          type="link"
+          to={`restaurant/${id}`}
+        >
+          Saiba mais
+        </Button>
       </div>
     </S.Infos>
   </S.RestaurantCard>

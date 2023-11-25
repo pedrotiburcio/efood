@@ -1,6 +1,10 @@
-import * as S from './styles'
 import { useDispatch } from 'react-redux'
+
+import Button from '../Button'
+
 import { open, add } from '../../store/reducers/modal'
+
+import * as S from './styles'
 
 export type ProductType = {
   foto: string
@@ -9,13 +13,6 @@ export type ProductType = {
   nome: string
   descricao: string
   porcao: string
-}
-
-export const priceFormat = (preco = 0) => {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(preco)
 }
 
 const getDescription = (description: string) => {
@@ -48,7 +45,13 @@ const Product = ({ foto, preco, id, nome, descricao, porcao }: ProductType) => {
         <img src={foto} alt={nome} />
         <S.Title>{nome}</S.Title>
         <S.Description>{getDescription(descricao)}</S.Description>
-        <S.Button onClick={openModal}>Mais detalhes</S.Button>
+        <Button
+          title="Clique aqui para saber mais detalhes sobre o produto"
+          type="button"
+          onClick={openModal}
+        >
+          Mais detalhes
+        </Button>
       </S.ProductsCard>
     </>
   )

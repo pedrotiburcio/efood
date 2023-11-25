@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 import { TagProps } from '.'
 import { colors } from '../../styles'
 

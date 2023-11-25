@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import { breakpoints, colors } from '../../styles'
+
 import { TagContainer } from '../Tag/styles'
+import { breakpoints, colors } from '../../styles'
 
 export const RestaurantCard = styled.div``
 
@@ -57,18 +57,6 @@ export const Description = styled.p`
   line-height: 22px;
   color: ${colors.darkPink};
   text-align: justify;
-`
-
-export const ButtonLink = styled(Link)`
-  padding: 4px 6px;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: bold;
-  background-color: ${colors.darkPink};
-  color: ${colors.pink};
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
 `
 
 export const InfosTag = styled.div`
