@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { ProductType } from '../../components/Product'
-
 type ModalState = {
   item: ProductType
   isOpen: boolean

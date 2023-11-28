@@ -1,11 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
 
-import { priceFormat } from '../../utils'
 import Button from '../Button'
+
 import { add, open } from '../../store/reducers/cart'
 import { close } from '../../store/reducers/modal'
 import { RootReducer } from '../../store'
+import { priceFormat } from '../../utils'
+
 import closeImg from '../../assets/images/close.png'
+
 import * as S from './styles'
 
 const Modal = () => {

@@ -37,6 +37,11 @@ export const HeaderContainer = styled.div`
       color: ${colors.darkPink};
       background-color: transparent;
       border: none;
+      cursor: pointer;
+    }
+
+    h1 {
+      line-height: 0;
     }
   }
 

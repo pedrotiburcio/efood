@@ -6,15 +6,6 @@ import { open, add } from '../../store/reducers/modal'
 
 import * as S from './styles'
 
-export type ProductType = {
-  foto: string
-  preco: number
-  id: number
-  nome: string
-  descricao: string
-  porcao: string
-}
-
 const getDescription = (description: string) => {
   if (description.length > 175) {
     return description.slice(0, 160) + '...'

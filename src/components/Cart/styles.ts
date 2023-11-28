@@ -36,6 +36,14 @@ export const Aside = styled.aside`
   z-index: 1;
   padding: 32px 8px 64px 8px;
   overflow-y: scroll;
+
+  .empty-text {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    color: ${colors.pink};
+    margin-bottom: 16px;
+  }
 `
 
 export const CartItem = styled.li`

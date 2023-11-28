@@ -14,24 +14,16 @@ type RestaurantParams = {
 const Perfil = () => {
   const { id } = useParams() as RestaurantParams
 
-  const { data: restaurant } = useGetSelectedRestaurantQuery(id)
+  const { data: restaurant, isLoading } = useGetSelectedRestaurantQuery(id)
 
-  if (restaurant) {
-    return (
-      <>
-        <Header />
-        <Presentation
-          type={restaurant.tipo}
-          title={restaurant.titulo}
-          image={restaurant.capa}
-        />
-        <ProductsList products={restaurant.cardapio} />
-        <Footer />
-      </>
-    )
-  }
-
-  return <h4>Carregando...</h4>
+  return (
+    <>
+      <Header />
+      <Presentation />
+      <ProductsList products={restaurant?.cardapio} isLoading={isLoading} />
+      <Footer />
+    </>
+  )
 }
 
 export default Perfil

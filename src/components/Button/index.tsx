@@ -5,13 +5,14 @@ type Props = {
   type: 'button' | 'link' | 'submit'
   children: string
   to?: string
+  disabled?: boolean
   onClick?: () => void
 }
 
-const Button = ({ title, type, children, to, onClick }: Props) => {
+const Button = ({ title, type, children, to, disabled, onClick }: Props) => {
   if (type === 'button' || type === 'submit') {
     return (
-      <S.StandardButton title={title} onClick={onClick}>
+      <S.StandardButton title={title} onClick={onClick} disabled={disabled}>
         {children}
       </S.StandardButton>
     )

@@ -1,8 +1,6 @@
 import Button from '../Button'
 import Tag from '../Tag'
 
-import { RestaurantType } from '../../pages/Home'
-
 import star from '../../assets/images/star.svg'
 
 import * as S from './styles'

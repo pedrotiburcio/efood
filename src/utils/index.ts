@@ -1,5 +1,3 @@
-import { ProductType } from '../components/Product'
-
 export const priceFormat = (price = 0) => {
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',

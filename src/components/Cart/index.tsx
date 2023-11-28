@@ -38,31 +38,50 @@ const Cart = () => {
     <S.Container className={isOpen ? 'is-open' : ''}>
       <S.Overlay onClick={closeCart} />
       <S.Aside>
-        <>
-          <ul>
-            {items.map((item) => (
-              <S.CartItem key={item.id}>
-                <img src={item.foto} />
-                <div>
-                  <h3>{item.nome}</h3>
-                  <span>{priceFormat(item.preco)}</span>
-                </div>
-                <button onClick={() => removeFromCart(item.id)} type="button" />
-              </S.CartItem>
-            ))}
-          </ul>
-          <S.PriceContent>
-            <p>Valor total</p>
-            <span>{priceFormat(getTotalPrice(items))}</span>
-          </S.PriceContent>
-          <Button
-            title="Clique aqui para continuar com a entrega"
-            type="button"
-            onClick={() => redirect()}
-          >
-            Continuar com a entrega
-          </Button>
-        </>
+        {items.length > 0 ? (
+          <>
+            <ul>
+              {items.map((item) => (
+                <S.CartItem key={item.id}>
+                  <img src={item.foto} />
+                  <div>
+                    <h3>{item.nome}</h3>
+                    <span>{priceFormat(item.preco)}</span>
+                  </div>
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    type="button"
+                  />
+                </S.CartItem>
+              ))}
+            </ul>
+            <S.PriceContent>
+              <p>Valor total</p>
+              <span>{priceFormat(getTotalPrice(items))}</span>
+            </S.PriceContent>
+            <Button
+              title="Clique aqui para continuar com a entrega"
+              type="button"
+              onClick={() => redirect()}
+            >
+              Continuar com a entrega
+            </Button>
+          </>
+        ) : (
+          <>
+            <p className="empty-text">
+              O carrinho está vazio, adicione um produto para continuar com a
+              compra.
+            </p>
+            <Button
+              title="Clique aqui para retornar ao menu do restaurante"
+              type="button"
+              onClick={() => closeCart()}
+            >
+              Retornar
+            </Button>
+          </>
+        )}
       </S.Aside>
     </S.Container>
   )

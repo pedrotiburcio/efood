@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import InputMask from 'react-input-mask'
 
 import Button from '../Button'
 import { Container, Overlay } from '../Cart/styles'
@@ -24,7 +25,7 @@ import { usePurchaseMutation } from '../../services/api'
 import * as S from './styles'
 
 const Checkout = () => {
-  const [purchase, { data, isSuccess }] = usePurchaseMutation()
+  const [purchase, { data, isLoading }] = usePurchaseMutation()
 
   const { deliveryIsOpen, paymentIsOpen, confirmationIsOpen } = useSelector(
     (state: RootReducer) => state.checkout
@@ -40,8 +41,10 @@ const Checkout = () => {
   }
 
   const showInfosPayment = () => {
-    dispatch(closeDelivery())
-    dispatch(openPayment())
+    if (verifyFields(deliveryFields)) {
+      dispatch(closeDelivery())
+      dispatch(openPayment())
+    }
   }
 
   const showInfosDelivery = () => {
@@ -50,6 +53,7 @@ const Checkout = () => {
   }
 
   const showInfosConfirmation = () => {
+    form.handleSubmit()
     dispatch(closePayment())
     dispatch(openConfirmation())
   }
@@ -88,8 +92,8 @@ const Checkout = () => {
         .min(3, 'A cidade precisa ter pelo menos 3 caracteres')
         .required('O campo é obrigatório'),
       zipCode: Yup.string()
-        .min(8, 'O cep precisa ter 8 caracteres')
-        .max(8, 'O cep precisa ter 8 caracteres')
+        .min(9, 'O cep precisa ter 8 caracteres')
+        .max(9, 'O cep precisa ter 8 caracteres')
         .required('O campo é obrigatório'),
       number: Yup.string()
         .min(1, 'O número precisa ter pelo menos um caractere')
@@ -99,8 +103,8 @@ const Checkout = () => {
         .min(5, 'O nome no cartão deve ter pelo menos 5 caracteres')
         .required('O campo é obrigatório'),
       cardNumber: Yup.string()
-        .min(16, 'O número do cartão deve ter 16 dígitos')
-        .max(16, 'O número do cartão deve ter 16 dígitos')
+        .min(19, 'O número do cartão deve ter 16 dígitos')
+        .max(19, 'O número do cartão deve ter 16 dígitos')
         .required('O campo é obrigatório'),
       cardSecurityCode: Yup.string()
         .min(3, 'O código de segurança deve ter 3 dígitos')
@@ -111,18 +115,16 @@ const Checkout = () => {
         .max(2, 'O mês de vencimento deve ter 2 dígitos')
         .required('O campo é obrigatório'),
       expiresYear: Yup.string()
-        .min(4, 'O ano de vencimento deve ter 4 dígitos')
-        .max(4, 'O ano de vencimento deve ter 4 dígitos')
+        .min(2, 'O ano de vencimento deve ter 4 dígitos')
+        .max(2, 'O ano de vencimento deve ter 4 dígitos')
         .required('O campo é obrigatório')
     }),
     onSubmit: (values) => {
       purchase({
-        products: [
-          {
-            id: 1,
-            price: getTotalPrice(items)
-          }
-        ],
+        products: items.map((item) => ({
+          id: item.id,
+          price: item.preco as number
+        })),
         delivery: {
           receiver: values.receiver,
           address: {
@@ -148,6 +150,23 @@ const Checkout = () => {
     }
   })
 
+  const deliveryFields = ['receiver', 'adress', 'city', 'zipCode', 'number']
+
+  const verifyFields = (fields: string[]) => {
+    let areFieldsCorrect = true
+
+    if (!form.dirty) {
+      return false
+    }
+
+    for (let i = 0; i < fields.length; i++) {
+      if (checkInputHasError(fields[i])) {
+        areFieldsCorrect = false
+      }
+    }
+    return areFieldsCorrect
+  }
+
   const checkInputHasError = (fieldName: string) => {
     const isTouched = fieldName in form.touched
     const isInvalid = fieldName in form.errors
@@ -158,107 +177,108 @@ const Checkout = () => {
 
   return (
     <>
-      <Container className={deliveryIsOpen ? 'is-open' : ''}>
-        <Overlay onClick={close} />
-        <S.AsideCheckout>
-          <>
-            <S.Title>Entrega</S.Title>
-            <S.InputGroup>
-              <label htmlFor="receiver">Quem irá receber</label>
-              <input
-                className={checkInputHasError('receiver') ? 'error' : ''}
-                type="text"
-                id="receiver"
-                name="receiver"
-                value={form.values.receiver}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-              />
-            </S.InputGroup>
-            <S.InputGroup>
-              <label htmlFor="adress">Endereço</label>
-              <input
-                className={checkInputHasError('adress') ? 'error' : ''}
-                type="text"
-                id="adress"
-                name="adress"
-                value={form.values.adress}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-              />
-            </S.InputGroup>
-            <S.InputGroup>
-              <label htmlFor="city">Cidade</label>
-              <input
-                className={checkInputHasError('city') ? 'error' : ''}
-                type="text"
-                id="city"
-                name="city"
-                value={form.values.city}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-              />
-            </S.InputGroup>
-            <S.Row>
+      <form onSubmit={form.handleSubmit}>
+        <Container className={deliveryIsOpen ? 'is-open' : ''}>
+          <Overlay onClick={close} />
+          <S.AsideCheckout>
+            <>
+              <S.Title>Entrega</S.Title>
               <S.InputGroup>
-                <label htmlFor="zipCode">CEP</label>
+                <label htmlFor="receiver">Quem irá receber</label>
                 <input
-                  className={checkInputHasError('zipCode') ? 'error' : ''}
+                  className={checkInputHasError('receiver') ? 'error' : ''}
                   type="text"
-                  id="zipCode"
-                  name="zipCode"
-                  value={form.values.zipCode}
+                  id="receiver"
+                  name="receiver"
+                  value={form.values.receiver}
                   onChange={form.handleChange}
                   onBlur={form.handleBlur}
                 />
               </S.InputGroup>
               <S.InputGroup>
-                <label htmlFor="number">Número</label>
+                <label htmlFor="adress">Endereço</label>
                 <input
-                  className={checkInputHasError('number') ? 'error' : ''}
+                  className={checkInputHasError('adress') ? 'error' : ''}
                   type="text"
-                  id="number"
-                  name="number"
-                  value={form.values.number}
+                  id="adress"
+                  name="adress"
+                  value={form.values.adress}
                   onChange={form.handleChange}
                   onBlur={form.handleBlur}
                 />
               </S.InputGroup>
-            </S.Row>
-            <S.InputGroup>
-              <label htmlFor="complement">Complemento (opcional)</label>
-              <input
-                className={checkInputHasError('complement') ? 'error' : ''}
-                type="text"
-                id="complement"
-                name="complement"
-                value={form.values.complement}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-              />
-            </S.InputGroup>
-            <S.ButtonCheckout
-              title="Clique aqui para continuar com o pagamento"
-              type="button"
-              onClick={() => showInfosPayment()}
-              marginTop="24px"
-            >
-              Continuar com o pagamento
-            </S.ButtonCheckout>
-            <S.ButtonCheckout
-              title="Clique aqui para retornar ao carrinho"
-              type="button"
-              onClick={() => openCart()}
-            >
-              Voltar para o carrinho
-            </S.ButtonCheckout>
-          </>
-        </S.AsideCheckout>
-      </Container>
-      <Container className={paymentIsOpen ? 'is-open' : ''}>
-        <Overlay onClick={close} />
-        <S.AsideCheckout>
-          <form onSubmit={form.handleSubmit}>
+              <S.InputGroup>
+                <label htmlFor="city">Cidade</label>
+                <input
+                  className={checkInputHasError('city') ? 'error' : ''}
+                  type="text"
+                  id="city"
+                  name="city"
+                  value={form.values.city}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                />
+              </S.InputGroup>
+              <S.Row>
+                <S.InputGroup>
+                  <label htmlFor="zipCode">CEP</label>
+                  <InputMask
+                    className={checkInputHasError('zipCode') ? 'error' : ''}
+                    type="text"
+                    id="zipCode"
+                    name="zipCode"
+                    value={form.values.zipCode}
+                    onChange={form.handleChange}
+                    onBlur={form.handleBlur}
+                    mask="99999-999"
+                  />
+                </S.InputGroup>
+                <S.InputGroup>
+                  <label htmlFor="number">Número</label>
+                  <input
+                    className={checkInputHasError('number') ? 'error' : ''}
+                    type="text"
+                    id="number"
+                    name="number"
+                    value={form.values.number}
+                    onChange={form.handleChange}
+                    onBlur={form.handleBlur}
+                  />
+                </S.InputGroup>
+              </S.Row>
+              <S.InputGroup>
+                <label htmlFor="complement">Complemento (opcional)</label>
+                <input
+                  className={checkInputHasError('complement') ? 'error' : ''}
+                  type="text"
+                  id="complement"
+                  name="complement"
+                  value={form.values.complement}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                />
+              </S.InputGroup>
+              <S.ButtonCheckout
+                title="Clique aqui para continuar com o pagamento"
+                type="button"
+                onClick={() => showInfosPayment()}
+                marginTop="24px"
+              >
+                Continuar com o pagamento
+              </S.ButtonCheckout>
+              <S.ButtonCheckout
+                title="Clique aqui para retornar ao carrinho"
+                type="button"
+                onClick={() => openCart()}
+              >
+                Voltar para o carrinho
+              </S.ButtonCheckout>
+            </>
+          </S.AsideCheckout>
+        </Container>
+        <Container className={paymentIsOpen ? 'is-open' : ''}>
+          <Overlay onClick={close} />
+          <S.AsideCheckout>
             <S.Title>
               Pagamento - Valor a pagar {priceFormat(getTotalPrice(items))}
             </S.Title>
@@ -277,7 +297,7 @@ const Checkout = () => {
             <S.Row columnGap="30px">
               <S.InputGroup maxWidth="228px">
                 <label htmlFor="cardNumber">Número do cartão</label>
-                <input
+                <InputMask
                   className={checkInputHasError('cardNumber') ? 'error' : ''}
                   type="text"
                   id="cardNumber"
@@ -285,11 +305,12 @@ const Checkout = () => {
                   value={form.values.cardNumber}
                   onChange={form.handleChange}
                   onBlur={form.handleBlur}
+                  mask="9999 9999 9999 9999"
                 />
               </S.InputGroup>
               <S.InputGroup maxWidth="87px">
                 <label htmlFor="cardSecurityCode">CVV</label>
-                <input
+                <InputMask
                   className={
                     checkInputHasError('cardSecurityCode') ? 'error' : ''
                   }
@@ -299,13 +320,14 @@ const Checkout = () => {
                   value={form.values.cardSecurityCode}
                   onChange={form.handleChange}
                   onBlur={form.handleBlur}
+                  mask="999"
                 />
               </S.InputGroup>
             </S.Row>
             <S.Row>
               <S.InputGroup>
                 <label htmlFor="expiresMonth">Mês de vencimento</label>
-                <input
+                <InputMask
                   className={checkInputHasError('expiresMonth') ? 'error' : ''}
                   type="text"
                   id="expiresMonth"
@@ -313,11 +335,12 @@ const Checkout = () => {
                   value={form.values.expiresMonth}
                   onChange={form.handleChange}
                   onBlur={form.handleBlur}
+                  mask="99"
                 />
               </S.InputGroup>
               <S.InputGroup>
                 <label htmlFor="expiresYear">Ano de vencimento</label>
-                <input
+                <InputMask
                   className={checkInputHasError('expiresYear') ? 'error' : ''}
                   type="text"
                   id="expiresYear"
@@ -325,16 +348,18 @@ const Checkout = () => {
                   value={form.values.expiresYear}
                   onChange={form.handleChange}
                   onBlur={form.handleBlur}
+                  mask="99"
                 />
               </S.InputGroup>
             </S.Row>
             <S.ButtonCheckout
               title="Clique aqui para finalizar o pagamento"
               type="submit"
-              onClick={showInfosConfirmation}
+              onClick={() => showInfosConfirmation()}
+              disabled={isLoading}
               marginTop="24px"
             >
-              Finalizar pagamento
+              {isLoading ? 'Finalizando pagamento...' : 'Finalizar pagamento'}
             </S.ButtonCheckout>
             <S.ButtonCheckout
               title="Clique aqui para retornar para a edição de endereço"
@@ -343,50 +368,42 @@ const Checkout = () => {
             >
               Voltar para a edição de endereço
             </S.ButtonCheckout>
-          </form>
-        </S.AsideCheckout>
-      </Container>
+          </S.AsideCheckout>
+        </Container>
+      </form>
       <Container className={confirmationIsOpen ? 'is-open' : ''}>
-        <Overlay onClick={close} />
+        <Overlay onClick={closeCheckout} />
         <S.AsideCheckout>
-          {isSuccess ? (
-            <>
-              <S.ContainerOrder>
-                <S.Title>Pedido realizado - {data.orderId}</S.Title>
-                <p>
-                  Estamos felizes em informar que seu pedido já está em processo
-                  de preparação e, em breve, será entregue no endereço
-                  fornecido.
-                </p>
-                <p>
-                  Gostaríamos de ressaltar que nossos entregadores não estão
-                  autorizados a realizar cobranças extras.
-                </p>
-                <p>
-                  Lembre-se da importância de higienizar as mãos após o
-                  recebimento do pedido, garantindo assim sua segurança e
-                  bem-estar durante a refeição.
-                </p>
-                <p>
-                  Esperamos que desfrute de uma deliciosa e agradável
-                  experiência gastronômica. Bom apetite!
-                </p>
-                <Button
-                  title="Clique aqui para sair da aba de checkout"
-                  type="button"
-                  onClick={closeCheckout}
-                >
-                  Concluir
-                </Button>
-              </S.ContainerOrder>
-            </>
-          ) : (
-            ''
-          )}
+          <S.ContainerOrder>
+            <S.Title>Pedido realizado - {data?.orderId}</S.Title>
+            <p>
+              Estamos felizes em informar que seu pedido já está em processo de
+              preparação e, em breve, será entregue no endereço fornecido.
+            </p>
+            <p>
+              Gostaríamos de ressaltar que nossos entregadores não estão
+              autorizados a realizar cobranças extras.
+            </p>
+            <p>
+              Lembre-se da importância de higienizar as mãos após o recebimento
+              do pedido, garantindo assim sua segurança e bem-estar durante a
+              refeição.
+            </p>
+            <p>
+              Esperamos que desfrute de uma deliciosa e agradável experiência
+              gastronômica. Bom apetite!
+            </p>
+            <Button
+              title="Clique aqui para sair da aba de checkout"
+              type="button"
+              onClick={closeCheckout}
+            >
+              Concluir
+            </Button>
+          </S.ContainerOrder>
         </S.AsideCheckout>
       </Container>
     </>
   )
 }
-
 export default Checkout

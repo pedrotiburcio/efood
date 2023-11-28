@@ -25,7 +25,9 @@ const Header = () => {
         >
           Restaurantes
         </S.RestaurantLink>
-        <img src={logo} alt="Logo efood" />
+        <h1>
+          <img src={logo} alt="Logo efood" />
+        </h1>
         <button onClick={openCart}>
           {items.length} produto(s) no carrinho
         </button>
