@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import InputMask from 'react-input-mask'
 
+import Loader from '../Loader'
 import Button from '../Button'
 import { Container, Overlay } from '../Cart/styles'
 
@@ -119,7 +120,7 @@ const Checkout = () => {
         .max(2, 'O ano de vencimento deve ter 4 dígitos')
         .required('O campo é obrigatório')
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       purchase({
         products: items.map((item) => ({
           id: item.id,
@@ -147,6 +148,7 @@ const Checkout = () => {
           }
         }
       })
+      resetForm()
     }
   })
 
@@ -355,7 +357,7 @@ const Checkout = () => {
             <S.ButtonCheckout
               title="Clique aqui para finalizar o pagamento"
               type="submit"
-              onClick={() => showInfosConfirmation()}
+              onClick={showInfosConfirmation}
               disabled={isLoading}
               marginTop="24px"
             >
@@ -372,34 +374,41 @@ const Checkout = () => {
         </Container>
       </form>
       <Container className={confirmationIsOpen ? 'is-open' : ''}>
-        <Overlay onClick={closeCheckout} />
+        <Overlay onClick={() => closeCheckout()} />
         <S.AsideCheckout>
           <S.ContainerOrder>
-            <S.Title>Pedido realizado - {data?.orderId}</S.Title>
-            <p>
-              Estamos felizes em informar que seu pedido já está em processo de
-              preparação e, em breve, será entregue no endereço fornecido.
-            </p>
-            <p>
-              Gostaríamos de ressaltar que nossos entregadores não estão
-              autorizados a realizar cobranças extras.
-            </p>
-            <p>
-              Lembre-se da importância de higienizar as mãos após o recebimento
-              do pedido, garantindo assim sua segurança e bem-estar durante a
-              refeição.
-            </p>
-            <p>
-              Esperamos que desfrute de uma deliciosa e agradável experiência
-              gastronômica. Bom apetite!
-            </p>
-            <Button
-              title="Clique aqui para sair da aba de checkout"
-              type="button"
-              onClick={closeCheckout}
-            >
-              Concluir
-            </Button>
+            {data ? (
+              <>
+                <S.Title>Pedido realizado - {data.orderId}</S.Title>
+                <p>
+                  Estamos felizes em informar que seu pedido já está em processo
+                  de preparação e, em breve, será entregue no endereço
+                  fornecido.
+                </p>
+                <p>
+                  Gostaríamos de ressaltar que nossos entregadores não estão
+                  autorizados a realizar cobranças extras.
+                </p>
+                <p>
+                  Lembre-se da importância de higienizar as mãos após o
+                  recebimento do pedido, garantindo assim sua segurança e
+                  bem-estar durante a refeição.
+                </p>
+                <p>
+                  Esperamos que desfrute de uma deliciosa e agradável
+                  experiência gastronômica. Bom apetite!
+                </p>
+                <Button
+                  title="Clique aqui para sair da aba de checkout"
+                  type="button"
+                  onClick={() => closeCheckout()}
+                >
+                  Concluir
+                </Button>
+              </>
+            ) : (
+              <Loader />
+            )}
           </S.ContainerOrder>
         </S.AsideCheckout>
       </Container>
